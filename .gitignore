@@ -1,0 +1,4 @@
+.vscode/
+SDL2.dll
+main.exe
+Makefile
