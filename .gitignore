@@ -1,4 +1,7 @@
 .vscode/
-SDL2.dll
-main.exe
+addon/
+assets/
+tower-defence.code-workspace
+*.dll
+**/*.exe
 Makefile

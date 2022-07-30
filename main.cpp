@@ -1,15 +1,34 @@
 #include<iostream>
 #define SDL_MAIN_HANDLED
 #include<SDL2/SDL.h>
-#include<game.cpp>
+#include "game.hpp"
 
 const int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
+Game* myGame = nullptr;
 
 int main(int argc, char* argv[]){
-  // std::cout << "Hello World!" << std::endl;
-  SDL_Init(SDL_INIT_EVERYTHING);
-  Game *myGame = new Game();
-  myGame->init("Hello World", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, false);
-  // std::cin.get();
+  const int FPS = 60;
+  const int frameDelay = 1000 / FPS;
+  uint32_t frameStart;
+  int frameTime;
+
+  myGame = new Game();
+  myGame->init("Hello World", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, false);
+
+  while(myGame->running()){
+
+    frameStart = SDL_GetTicks();
+
+    myGame->handleEvents();
+    myGame->update();
+    myGame->render();
+
+    frameTime = SDL_GetTicks() - frameStart;
+    if(frameDelay > frameTime){
+      SDL_Delay(frameDelay - frameTime);
+    }
+  }
+
+  myGame->clean();
   return 0;
 }
